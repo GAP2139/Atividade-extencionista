@@ -42,15 +42,15 @@ while True: # Uma estrutura de repetição com o While, essa estrutura só é qu
             print ('Qual o valor individual do produto?')
             valor = input()
             arquivo = open ( 'C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "r")
-            conteudo = arquivo.readlines()
-            novo_produto = "\nCodigo: {0} Produto: {1} Quantidade: {2} Valor: {3}" .format(b+1, nome, quantidade, valor)
-            conteudo.append(novo_produto)
+            conteudo = arquivo.readlines() # Primeiramente armazeno as linhas já existentes no estoque, para não perder
+            novo_produto = "\nCodigo: {0} Produto: {1} Quantidade: {2} Valor: {3}" .format(b+1, nome, quantidade, valor) # Uso a variável do começo para dar um código e adiciono o restante dos dados
+            conteudo.append(novo_produto) # adiciono a nova linha na variável que armazena as linhas anteriores
             print(novo_produto)
-            arquivo = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "w")
-            arquivo.writelines(conteudo)
+            arquivo = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "w") # Abro o arquivo pra leitura
+            arquivo.writelines(conteudo) # Escrevo as linhas no Estoque
             arquivo.close()
             print ('Item adicionado no estoque')
-            print('Deseja adicionar um novo item?(S/N)')
+            print('Deseja adicionar um novo item?(S/N)') #Adicionado a opção de adicionar mais produtos, pela praticidade
             w = input()
             if w in 'N/n':
                 break
@@ -60,7 +60,7 @@ while True: # Uma estrutura de repetição com o While, essa estrutura só é qu
         print ("Temos os seguintes produtos em estoque, qual deseja remover?:\n")
         estoque = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "r")
         print('Codigo do produto         Produto')
-        for linhas in estoque:
+        for linhas in estoque: # Exibe os produtos armazenados, seu código e nome
             linhas = linhas.strip()
             itens = linhas.split()
             z = 1
@@ -78,21 +78,21 @@ while True: # Uma estrutura de repetição com o While, essa estrutura só é qu
         codigo_produto = input ()
         print ('Tem certeza que deseja deletar o produto?(S/N)\n')
         confirmacao = input()
-        if confirmacao in 'S/s':
+        if confirmacao in 'S/s': # Realiza uma confirmação se o Delete é mesmo desejado, já que não foi implementado uma ferramenta de retorno ao estado inicial
             arquivo = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "r")
-            linhas = arquivo.readlines()
+            linhas = arquivo.readlines() # Armazena as linhas atuais do estoque
             arquivo = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "w")
             for linha in linhas:
-                itens = linha.split()
+                itens = linha.split() # Separa os itens dessa linha para que eu possa referencia-los
                 print (itens[1])
                 if itens[1] != codigo_produto:
-                    arquivo.write(linha)
+                    arquivo.write(linha) # Reescreve no estoque todas as linhas que são diferentes do código do produto selecionado pelo usuário
             print ('Produto deletado com sucesso \n')
             arquivo.close()
         else:
             break
-    elif x == '4':
-        print ("Temos os seguintes produtos em estoque, qual deseja editar?(Digite somente o Codigo do produto):\n")
+    elif x == '4': # Aqui é necessário mais informações, já que é existem 3 campos possíveis de edição
+        print ("Temos os seguintes produtos em estoque, qual deseja editar?(Digite somente o Codigo do produto):\n") # Primeiramente exibo os produtos disponíveis
         estoque = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "r")
         print('Codigo do produto         Produto')
         for linhas in estoque:
@@ -110,41 +110,41 @@ while True: # Uma estrutura de repetição com o While, essa estrutura só é qu
             dados = []
         estoque.close()
         produto_editar = input()
-        print ('Qual o dado que deseja alterar?\n')
+        print ('Qual o dado que deseja alterar?\n') # Peço para ser informado de qual das informações se deseja fazer a alteração
         print ('1 - Nome do produto')
         print ('2 - Quantidade')
         print ('3 - Valor\n')
         dado_editar = input ()
         if dado_editar == '1':
-            print ('Qual será o novo nome do produto?\n')
+            print ('Qual será o novo nome do produto?\n') # Primeiramente recebo a informação do novo dado
             novo_nome = input()
-            print ('Confirmar alteração?(S/N)\n')
+            print ('Confirmar alteração?(S/N)\n') # confirmo se a alteração será mesmo feita por não ter um sistema para retornar ao ponto inicial
             confirmacao_nome = input()
             if confirmacao_nome in 'S/s':
                 itens =[]
                 dados = []
                 arquivo = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "r")
-                for linha in arquivo:
-                    itens = linha.split()
-                    if itens[1] == produto_editar:
+                for linha in arquivo: # Separo as linhas
+                    itens = linha.split() # Separo os itens das linhas (Para poder referenciar futuramente)
+                    if itens[1] == produto_editar: # localizo o produto desejado
                         dados = itens
-                        conteudo = arquivo.readlines()
-                        produto_editado = "\nCodigo: {0} Produto: {1} Quantidade: {2} Valor: {3}".format(dados[1], novo_nome, dados[5],dados[7])
+                        conteudo = arquivo.readlines() #Armazeno a linha que está o produto desejado
+                        produto_editado = "\nCodigo: {0} Produto: {1} Quantidade: {2} Valor: {3}".format(dados[1], novo_nome, dados[5],dados[7]) # Altero o dado conforme foi digitado
                         conteudo.append(produto_editado)
                         arquivo = open('C:\Programas ( antiga área de trabalho )\Faculdade\Estoque.txt', "w")
-                        arquivo.writelines(conteudo)
+                        arquivo.writelines(conteudo) # Adiciono a nova linha no arquivo
                     else:
-                        arquivo.write(linha)
+                        arquivo.write(linha) # reescrevo as linhas dos produtos que não vão ser alterados
                         continue
                 dados [3] = novo_nome
                 print (dados)
                 print ('Produto atualizado com sucesso')
                 arquivo.close()
-                break
+                break #Encerro o programa, pois por trabalhar com arquivo em máquina local, após uma alteração desse tipo se faz necessário encerrar, caso contrário não consigo mais realizar ações
 
             else:
                 break
-        elif dado_editar == '2':
+        elif dado_editar == '2': #Este tópico fica da mesma forma do 'if dado_editar == '1':', mudando somente os dados para alterar, caso necessário, verificar os comentários no 1
             print ('Qual será a nova quantidade?\n')
             nova_quantidade = input()
             print ('Confirmar alteração?(S/N)\n')
@@ -172,7 +172,7 @@ while True: # Uma estrutura de repetição com o While, essa estrutura só é qu
                 break
             else:
                 break
-        elif dado_editar == '3':
+        elif dado_editar == '3': #Este tópico fica da mesma forma do 'if dado_editar == '1':', caso necessário, verificar os comentários no 1
             print ('Qual será o novo valor?\n')
             novo_valor = input()
             print ('Confirmar alteração?(S/N)\n')
